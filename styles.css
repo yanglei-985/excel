@@ -1,0 +1,284 @@
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.word-card {
+    border: 1px solid #ccc;
+    padding: 40px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    will-change: transform;
+}
+
+.hidden {
+    filter: blur(5px);
+    user-select: none;
+}
+
+.revealed {
+    filter: none;
+    transition: filter 0.3s ease;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.progress-bar {
+    cursor: pointer;
+    position: relative;
+    background-color: #eee;
+    border-radius: 10px;
+    height: 20px;
+    margin: 20px 0;
+    overflow: visible;
+    user-select: none;
+}
+
+#progressFill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 10px;
+    transition: width 0.1s ease;
+}
+
+.progress-handle {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border: 2px solid #4CAF50;
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.progress-handle:active {
+    cursor: grabbing;
+}
+
+.progress-tooltip {
+    position: absolute;
+    top: -30px;
+    background-color: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 100;
+}
+
+.progress-bar:hover .progress-tooltip {
+    opacity: 1;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#playPronunciation {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.review-options {
+    margin-top: 20px;
+}
+
+.main-content {
+    display: none;
+}
+
+.study-section {
+    flex: 2;
+}
+
+.history-panel {
+    flex: 1;
+    padding: 20px;
+    border-left: 1px solid #ccc;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.history-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.history-item.current {
+    background-color: #e8f5e9;
+}
+
+.word-english {
+    font-weight: bold;
+}
+
+.word-translation {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.word-card.wrong-word {
+    border-color: #ff6b6b;
+    background-color: #fff5f5;
+}
+
+.word-details {
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px dashed #eee;
+}
+
+#translation {
+    white-space: pre-line;
+    line-height: 1.5;
+}
+
+.upload-section {
+    text-align: center;
+    margin: 20px 0;
+    padding: 40px;
+    border: 3px dashed #4CAF50;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.upload-box {
+    margin: 20px 0;
+}
+
+.upload-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.upload-section input[type="file"] {
+    display: block;
+    margin: 0 auto 20px;
+    padding: 10px;
+}
+
+.jump-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.jump-control input {
+    width: 100px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.jump-control input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.jump-control button {
+    margin: 0;
+    padding: 5px 15px;
+}
+
+/* 添加高亮动画效果 */
+@keyframes highlight {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+}
+
+.word-card.highlight {
+    animation: highlight 1s ease;
+}
+
+.confusing-words-panel {
+    margin: 20px 0;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.confusing-words-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.confusing-words-input input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+}
+
+.confusing-words-input button {
+    background-color: #2196F3;
+}
+
+.confusing-words-input button:hover {
+    background-color: #1976D2;
+}
+
+details {
+    margin: 10px 0;
+}
+
+summary {
+    cursor: pointer;
+    color: #2196F3;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+summary:hover {
+    background-color: #e3f2fd;
+} 
