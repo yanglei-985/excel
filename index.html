@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词学习器</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="upload-section">
+            <h2>单词学习器</h2>
+            <div class="upload-box">
+                <input type="file" id="excelFile" accept=".xlsx, .xls">
+                <button id="uploadBtn">上传Excel文件</button>
+            </div>
+        </div>
+            <div>
+                <a href="https://grok.com/?referrer=website" target="_blank">Grok</a>
+            </div>
+
+
+
+        <div class="main-content">
+            <div class="study-section" style="display: none;">
+                <div class="progress-bar">
+                    <div id="progressFill">
+                        <div class="progress-handle"></div>
+                    </div>
+                    <div class="progress-tooltip"></div>
+                </div>
+                <div class="jump-control">
+                    <input type="number" id="jumpInput" min="1" placeholder="输入序号">
+                    <button id="jumpBtn">跳转</button>
+                </div>
+                <div class="stats">
+                    <span>进度: <span id="progress">0/0</span></span>
+                    <span>正确率: <span id="accuracy">0%</span></span>
+                </div>
+                <div class="word-card">
+                    <h2 id="word" class="hidden"></h2>
+                    <button id="playPronunciation">🔊</button>
+                    <p id="translation" class="hidden"></p>
+                </div>
+                <div class="buttons">
+                    <button id="showAnswer">显示答案</button>
+                    <button id="nextWord">下一个</button>
+                    <button id="markWrong">标记为错题</button>
+                </div>
+                <div class="review-options">
+                    <button id="shuffleWords">随机顺序</button>
+                    <button id="toggleAutoPlay">关闭自动播放</button>
+                    <button id="resetAll">重置所有数据</button>
+                    <button id="exportWords">导出未掌握单词</button>
+                </div>
+                <div class="confusing-words-panel">
+                    <details>
+                        <summary>易混单词对比</summary>
+                        <div class="confusing-words-input">
+                            <input type="text" id="word1" placeholder="单词1 (例: cut)">
+                            <input type="text" id="word2" placeholder="单词2 (例: cat)">
+                            <button id="playComparison">对比发音 (各3次)</button>
+                        </div>
+                    </details>
+                </div>
+                <div class="loop-play-panel">
+                    <h3>循环播放</h3>
+                    <div class="loop-controls">
+                        <button id="startLoopPlay">开始循环播放</button>
+                        <input type="number" id="loopInterval" min="1" max="10" value="3" style="width: 50px;">
+                        <span>秒间隔</span>
+                        <div class="loop-status">状态: <span id="loopStatus">未开始</span></div>
+                    </div>
+                    <script>
+                        let loopPlayInterval;
+                        let isLooping = false;
+                        
+                        document.getElementById('startLoopPlay').addEventListener('click', function() {
+                            if (!isLooping) {
+                                // 开始循环播放
+                                const interval = parseInt(document.getElementById('loopInterval').value) * 1000;
+                                document.getElementById('loopStatus').textContent = '播放中';
+                                document.getElementById('startLoopPlay').textContent = '停止循环播放';
+                                isLooping = true;
+                                
+                                // 立即播放一次
+                                playCurrentWordAudio();
+                                
+                                // 设置循环
+                                loopPlayInterval = setInterval(playCurrentWordAudio, interval);
+                            } else {
+                                // 停止循环播放
+                                clearInterval(loopPlayInterval);
+                                document.getElementById('loopStatus').textContent = '已停止';
+                                document.getElementById('startLoopPlay').textContent = '开始循环播放';
+                                isLooping = false;
+                            }
+                        });
+                        
+                        function playCurrentWordAudio() {
+                            // 使用已有的播放功能（重用已缓存的发音文件）
+                            const playButton = document.getElementById('playPronunciation');
+                            if (playButton) {
+                                playButton.click(); // 触发已有的播放按钮点击事件
+                            }
+                        }
+                    </script>
+                </div>
+
+
+
+                <script>
+                    document.getElementById('playComparison').addEventListener('click', function() {
+                        const word1 = document.getElementById('word1').value.trim();
+                        const word2 = document.getElementById('word2').value.trim();
+                        
+                        if (!word1 || !word2) {
+                            alert("请输入两个需要对比的单词");
+                            return;
+                        }
+                        
+                        playComparison([word1, word2], 3);
+                    });
+                </script>
+            </div>
+            
+            <div class="history-panel" style="display: none;">
+                <h3>未掌握单词</h3>
+                <div id="wordHistory"></div>
+            </div>
+        </div>
+    </div>
+    <div class="history-panel" style="display: none;">
+        <h3>未掌握单词</h3>
+        <div id="wordHistory"></div>
+    </div>
+    
+    
+
+    <script src="script1.js"></script>
+</body>
+</html> 
